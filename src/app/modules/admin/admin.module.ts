@@ -11,9 +11,17 @@ import { CoreModule } from 'src/app/core/core.module';
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'src/app/core/modules/table/table.module';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { AdminMainComponent } from './admin.component';
+import { SchoolProfileComponent } from './components/school-profile/school-profile.component';
 
 @NgModule({
-  declarations: [AdminDashboardComponent],
+  declarations: [
+    AdminDashboardComponent,
+    AdminMainComponent,
+    DashboardComponent,
+    SchoolProfileComponent,
+  ],
   imports: [
     CoreModule,
     TableModule,

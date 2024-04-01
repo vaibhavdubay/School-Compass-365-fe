@@ -182,7 +182,8 @@ export class AdminDashboardComponent {
   }
 
   constructor(private sharedStoreService: SharedStoreService) {
-    sharedStoreService.loggedInUser$.subscribe((user) => console.log(user));
-    this.FormGroup;
+    sharedStoreService.loggedInUser$.subscribe((user) => {
+      this.FormGroup?.patchValue(user);
+    });
   }
 }

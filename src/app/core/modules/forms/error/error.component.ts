@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { errorMessages } from '@sc-forms/form.constant';
 import {
   Checkbox,
@@ -14,25 +14,14 @@ import {
   templateUrl: './error.component.html',
   styles: ``,
 })
-export class ErrorComponent {
-  @Input({ required: true }) element!:
-    | Checkbox
-    | DateInput
-    | Radio
-    | Select
-    | TextInput
-    | TextAreaInput;
-  @Input() minLength?: number;
-  @Input() min?: number;
-  @Input() max?: number;
-  @Input() errorMessages: { [key: string]: string } = {};
-  @Input({ required: true }) set errors(errors: { [k: string]: string }) {
-    Object.keys(errors || {}).forEach((error) => {
+export class ErrorComponent implements OnChanges {
+  ngOnChanges(changes: SimpleChanges): void {
+    Object.keys(this.errors || {}).forEach((error) => {
       switch (error) {
         case 'required':
           this.message = errorMessages.required(this.element.label);
           break;
-        case 'minLength':
+        case 'minlength':
           this.message = errorMessages.minlength(
             this.element.label,
             this.minLength || 0,
@@ -62,6 +51,18 @@ export class ErrorComponent {
       }
     });
   }
+  @Input({ required: true }) element!:
+    | Checkbox
+    | DateInput
+    | Radio
+    | Select
+    | TextInput
+    | TextAreaInput;
+  @Input() minLength?: number;
+  @Input() min?: number;
+  @Input() max?: number;
+  @Input() errorMessages: { [key: string]: string } = {};
+  @Input({ required: true }) errors: { [k: string]: string } = {};
 
   message: string = '';
 }

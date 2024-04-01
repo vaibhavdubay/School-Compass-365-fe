@@ -9,6 +9,10 @@ export type InputElement =
   | TextElement
   | TextAreaElement;
 export type UiElement = ButtonElement | LabelElement | ButtonGroupElement;
+export type ButtonClickEvent = {
+  key: string;
+  element: ButtonElement;
+};
 
 export type CheckboxElement = { elementType: 'checkbox'; element: Checkbox };
 export type RadioElement = { elementType: 'radio'; element: Radio };
