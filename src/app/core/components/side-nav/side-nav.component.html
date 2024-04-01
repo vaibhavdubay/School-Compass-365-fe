@@ -7,8 +7,8 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <mat-toolbar>Menu</mat-toolbar>
-    <mat-nav-list class="pt-0">
+    <mat-toolbar>SC 365</mat-toolbar>
+    <mat-nav-list class="pt-4">
       @for (item of naveItem; track i; let i = $index) {
       <a
         mat-list-item
@@ -41,7 +41,7 @@
       </button>
       }
       <div class="d-flex w-100 justify-content-between">
-        <div>School-Compass-365-fe</div>
+        <div></div>
         <div
           class="profile_container d-flex px-2 pr-0 py-1 justify-content-end"
           [matMenuTriggerFor]="menu"
