@@ -10,6 +10,8 @@ export interface AdminUser {
   firstName: string;
   lastName: string;
   email: string;
+  profileImage: ProfileImage;
+
   password: string;
   role: Role;
   userName: string;
@@ -37,6 +39,7 @@ export interface TeacherProfile {
   schoolId: string;
   firstName: string;
   lastName: string;
+  profileImage: ProfileImage;
   email: string;
   password: string;
   role: Role;
@@ -48,6 +51,11 @@ export interface TeacherProfile {
   years_of_experience: number;
 }
 
+export interface ProfileImage {
+  _id: string;
+  url: string;
+}
+
 export interface StudentProfile {
   _id: string;
   schoolId: string;
@@ -55,6 +63,7 @@ export interface StudentProfile {
   classSection: string;
   firstName: string;
   lastName: string;
+  profileImage: ProfileImage;
   email: string;
   password: string;
   role: Role;

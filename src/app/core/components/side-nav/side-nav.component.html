@@ -48,18 +48,21 @@
         >
           <div class="profile text-end d-flex flex-column">
             <div class="profile_name">
-              {{ profile.firstName }} {{ profile.lastName }}
+              {{ (profile | async)?.firstName }}
+              {{ (profile | async)?.lastName }}
             </div>
-            <div class="profile_email">{{ profile.email }}</div>
+            <div class="profile_email">{{ (profile | async)?.email }}</div>
           </div>
           <div class="d-flex align-items-center justify-content-center">
             <img
               style="height: 24px"
               [src]="
-                profile?.avatar
-                  ? profile?.avatar
+                (profile | async)?.profileImage?.url
+                  ? (profile | async)?.profileImage?.url
                   : 'assets/images/avatar_1.webp'
               "
+              #profileImage
+              (error)="profileImage.src = 'assets/images/avatar_1.webp'"
               alt="user profile "
             />
             <!-- <mat-icon>account_circle</mat-icon> -->
