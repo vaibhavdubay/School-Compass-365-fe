@@ -4,9 +4,9 @@ import { sideNavConfig } from '@sc-modules/admin/constants/admin.constant';
 @Component({
   selector: 'sc-admin-main',
   template: `
-    <sc-side-nav [naveItem]="navConfig">
+    <sc-layout [navItems]="navConfig">
       <router-outlet></router-outlet>
-    </sc-side-nav>
+    </sc-layout>
   `,
 })
 export class AdminMainComponent {

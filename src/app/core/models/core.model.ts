@@ -31,7 +31,7 @@ export interface SchoolProfile {
   pincode: string;
   schoolDISECode: string;
   schoolCode: string;
-  classes: string[];
+  classes: Class[];
 }
 
 export interface TeacherProfile {
@@ -111,14 +111,27 @@ export interface NavItem {
   children?: NavItem[];
 }
 
-type User = AdminUser | StudentProfile | TeacherProfile;
-export type LoggedInUser = User & {
+export type LoggedInUser = (AdminUser | StudentProfile | TeacherProfile) & {
+  user: User;
   school: SchoolProfile;
 };
 
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  userName: string;
+  password: string;
+  role: Role;
+  profileImage?: ProfileImage;
+  changePassword: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface LoginResponse {
   accessToken: string;
-  user: LoggedInUser;
+  userProfile: LoggedInUser;
 }
 
 export interface HttpOptions {

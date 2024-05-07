@@ -8,7 +8,6 @@ import { SharedStoreEffect } from './store/effect';
 import { SharedStoreReducer } from './store/reducer';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/login/login.component';
-import { SideNavComponent } from './components/side-nav/side-nav.component';
 // materials
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
@@ -19,9 +18,11 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatMenuModule } from '@angular/material/menu';
+import { LayoutComponent } from './components/layout/layout.component';
+import { MenuComponent } from './components/menu/menu.component';
 
 @NgModule({
-  declarations: [LoginComponent, SideNavComponent],
+  declarations: [LoginComponent, LayoutComponent, MenuComponent],
   imports: [
     FormsModule,
     CommonModule,
@@ -39,6 +40,6 @@ import { MatMenuModule } from '@angular/material/menu';
     EffectsModule.forFeature([SharedStoreEffect]),
     StoreModule.forFeature(STORE_FEATURES.SHARED, SharedStoreReducer),
   ],
-  exports: [SideNavComponent],
+  exports: [LayoutComponent],
 })
 export class CoreModule {}

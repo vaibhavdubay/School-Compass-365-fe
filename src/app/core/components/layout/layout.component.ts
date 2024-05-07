@@ -1,23 +1,28 @@
-import { Component, Input, inject } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map, shareReplay } from 'rxjs/operators';
+import { Component, Input, inject } from '@angular/core';
 import { LoggedInUser, NavItem } from '@sc-models/core';
+import { Observable, map, shareReplay } from 'rxjs';
 import { SharedStoreService } from '../../service/shared-store.service';
 import { logInActions } from '../../store/action';
+import { ScreenSizeObserver } from '../../service/screen.service';
+import { SharedState } from '../../store/reducer';
 
 @Component({
-  selector: 'sc-side-nav',
-  templateUrl: './side-nav.component.html',
-  styleUrl: './side-nav.component.scss',
+  selector: 'sc-layout',
+  templateUrl: './layout.component.html',
+  styleUrl: './layout.component.scss',
 })
-export class SideNavComponent {
-  profile: Observable<LoggedInUser>;
+export class LayoutComponent {
+  @Input({ required: true }) navItems: NavItem[] = [];
+
   private breakpointObserver = inject(BreakpointObserver);
-  constructor(private sharedStore: SharedStoreService) {
+  profile: Observable<SharedState>;
+  constructor(
+    private sharedStore: SharedStoreService,
+    public readonly screenObserver: ScreenSizeObserver,
+  ) {
     this.profile = this.sharedStore.loggedInUser$;
   }
-  @Input({ required: true }) naveItem: NavItem[] = [];
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)

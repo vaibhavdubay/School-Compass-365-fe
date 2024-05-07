@@ -1,0 +1,16 @@
+.router-link-active {
+  // background-color: #f7f7f7;
+  background-color: #f8f9fa;
+  box-shadow: inset 1px 0px #0000000d, inset 0px 1px #0000000d,
+    inset 0px -1px #0000000d;
+}
+.nav_list {
+  column-gap: 0.6rem;
+  .material-symbols-outlined {
+    font-size: 1.3rem;
+  }
+}
+
+.mat-mdc-list-base {
+  background-color: white;
+}

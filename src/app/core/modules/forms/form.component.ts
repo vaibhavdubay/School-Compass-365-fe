@@ -7,7 +7,6 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {
-  ButtonClickEvent,
   ButtonElement,
   DateElement,
   FormElement,
@@ -33,7 +32,10 @@ export class FormComponent<T = { [k: string]: string }> implements OnChanges {
   @Input() customDateClasses: {
     [k: string]: { [className: string]: Date[] };
   } = {};
-  @Output() buttonClick = new EventEmitter<ButtonClickEvent>();
+  @Output() buttonClick = new EventEmitter<{
+    key: string;
+    element: ButtonElement;
+  }>();
   private inputElements = [
     'checkbox',
     'date',
@@ -46,6 +48,10 @@ export class FormComponent<T = { [k: string]: string }> implements OnChanges {
   formGroup = new FormGroup({}) as unknown as FormGroup<{
     [K in keyof T]: AbstractControl;
   }>;
+
+  set formValue(value: Partial<T>) {
+    this.formGroup.patchValue(value as any);
+  }
 
   constructor(private fb: FormBuilder) {}
 

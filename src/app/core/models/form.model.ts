@@ -9,10 +9,6 @@ export type InputElement =
   | TextElement
   | TextAreaElement;
 export type UiElement = ButtonElement | LabelElement | ButtonGroupElement;
-export type ButtonClickEvent = {
-  key: string;
-  element: ButtonElement;
-};
 
 export type CheckboxElement = { elementType: 'checkbox'; element: Checkbox };
 export type RadioElement = { elementType: 'radio'; element: Radio };
@@ -120,4 +116,12 @@ export type ButtonGroup = Element & {
   display?: 'row' | 'column';
   buttons: ButtonElement[];
 };
-export type ListOptions = { key: string; label: string }[];
+export type ListOptions = ListOption[];
+export class ListOption {
+  key: string;
+  label: string;
+  constructor(label: string, key?: string) {
+    this.key = key || label;
+    this.label = label;
+  }
+}

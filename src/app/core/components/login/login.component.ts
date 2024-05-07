@@ -26,13 +26,14 @@ export class LoginComponent {
     router: Router,
   ) {
     this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      userName: ['', Validators.required],
       password: ['', Validators.required],
     });
     const token = cookieService.get('authorization');
     if (token) {
       const data = JSON.parse(atob(token.split('.')?.[1]) || '{}');
-      router.navigate([data.role]);
+      console.log(data);
+      router.navigate([data?.userProfile?.user?.role]);
     } else {
       if (router.url.startsWith('/admin')) {
         this.isAdmin = true;
@@ -46,7 +47,7 @@ export class LoginComponent {
 
   login() {
     this.sharedStore.dispatch(
-      logInActions.logIn({ role: this.role, logDto: this.loginForm.value }),
+      logInActions.logIn({ logDto: this.loginForm.value }),
     );
   }
 

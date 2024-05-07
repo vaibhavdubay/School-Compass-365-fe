@@ -1,5 +1,4 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Role } from '@sc-enums/role';
 import {
   HttpErrorObject,
   LoggedInUser,
@@ -13,7 +12,7 @@ export const logInActions = createActionGroup({
     'User Profile': emptyProps(),
     'User Profile Success': props<{ response: LoggedInUser }>(),
     'User Profile Failure': props<{ error: HttpErrorObject }>(),
-    'Log In': props<{ role: Role; logDto: LoginDto }>(),
+    'Log In': props<{ logDto: LoginDto }>(),
     'Log In Success': props<{ response: LoginResponse }>(),
     'Log In Failure': emptyProps(),
     'Log Out': emptyProps(),

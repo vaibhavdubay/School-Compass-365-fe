@@ -46,9 +46,9 @@
               autocomplete="off"
               [ariaAutoComplete]="'off'"
               tabindex="3"
-              formControlName="username"
+              formControlName="userName"
               matInput
-              placeholder="Username"
+              placeholder="User Name"
             />
           </div>
           <div class="input-container mb-3">
@@ -61,6 +61,7 @@
               matInput
               tabindex="4"
               formControlName="password"
+              (keydown.enter)="login()"
               [type]="hidePassword ? 'password' : 'text'"
               placeholder="Password"
             />
@@ -77,9 +78,9 @@
           <div class="w-100 mb-3 mobile_font">Forget Password?</div>
           <div
             class="w-100 mt-4 login_button text-center"
+            (keydown.enter)="login()"
             (click)="login()"
             tabindex="6"
-            (keydown.enter)="login()"
           >
             Login
           </div>
@@ -105,8 +106,8 @@
               [ariaAutoComplete]="'off'"
               matInput
               tabindex="3"
-              formControlName="username"
-              placeholder="Username"
+              formControlName="userName"
+              placeholder="User Name"
             />
           </div>
           <div class="input-container mb-3">
@@ -117,7 +118,7 @@
               autocomplete="off"
               [ariaAutoComplete]="'off'"
               matInput
-              (keydown.enter)="login()"
+              (keydown)="login()"
               tabindex="4"
               [type]="hidePassword ? 'password' : 'text'"
               formControlName="password"
@@ -138,7 +139,6 @@
             class="w-100 mt-4 login_button text-center"
             (click)="login()"
             tabindex="6"
-            (keydown.enter)="login()"
           >
             Login
           </div>

@@ -1,13 +1,15 @@
 import { createReducer, on } from '@ngrx/store';
-import { LoggedInUser, Nullable } from '@sc-models/core';
+import { Nullable, SchoolProfile, User } from '@sc-models/core';
 import { logInActions } from './action';
 
 export interface SharedState {
-  loggedInUser: LoggedInUser;
+  loggedInUser: User;
+  schoolProfile: SchoolProfile;
 }
 
 export const initialState: Nullable<SharedState> = {
   loggedInUser: null,
+  schoolProfile: null,
 };
 
 export const SharedStoreReducer = createReducer(
@@ -16,14 +18,16 @@ export const SharedStoreReducer = createReducer(
     logInActions.logInSuccess,
     (state, action): SharedState => ({
       ...state,
-      loggedInUser: action.response.user,
+      loggedInUser: action.response.userProfile.user,
+      schoolProfile: action.response.userProfile.school,
     }),
   ),
   on(
     logInActions.userProfileSuccess,
     (state, action): SharedState => ({
       ...state,
-      loggedInUser: action.response,
+      loggedInUser: action.response.user,
+      schoolProfile: action.response.school,
     }),
   ),
   on(logInActions.logOut, () => ({

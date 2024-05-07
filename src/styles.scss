@@ -56,9 +56,56 @@ mat-icon {
 }
 .mdc-text-field--filled:not(.mdc-text-field--disabled),
 .mdc-text-field--focused {
-  background-color: transparent !important;
+  // background-color: transparent !important;
+
+  border: 1px solid #80808017;
+  border-radius: 10px;
 }
 .mat-mdc-form-field.mat-focused .mat-mdc-form-field-focus-overlay,
 .mat-mdc-text-field-wrapper:hover .mat-mdc-form-field-focus-overlay {
   opacity: 0 !important;
+}
+
+div.seperator {
+  max-height: 0.1rem;
+  min-height: 0.1rem;
+  width: calc(100% - 1rem);
+  margin: 0 0.5rem;
+  background-color: var(--neutral-300);
+}
+
+// mat tab
+.mat-mdc-tab.mdc-tab--active .mdc-tab__ripple::before {
+  background-color: var(--primary-400) !important;
+}
+
+.mat-mdc-tab.mdc-tab--active .mdc-tab__text-label {
+  color: var(--primary-550) !important;
+}
+
+.mat-mdc-tab .mdc-tab-indicator__content--underline {
+  border-color: var(--primary-550) !important;
+}
+
+// <---------------- scrollbar style ------------------------------> //
+
+/* width */
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  width: 3px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--primary-550);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-400);
 }

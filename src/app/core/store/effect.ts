@@ -6,7 +6,7 @@ import { LoggedInUser, LoginResponse } from '@sc-models/core';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectLoggedInUser } from './selector';
+import { selectShared } from './selector';
 import { CookieService } from '../service/cookie.service';
 
 @Injectable()
@@ -22,10 +22,22 @@ export class SharedStoreEffect {
   logIn = createEffect(() => {
     return this.action$.pipe(
       ofType(logInActions.logIn),
-      switchMap(({ role, logDto }) =>
-        this.apiService
-          .post<LoginResponse>(`/auth/${role}/login`, logDto)
-          .pipe(map((response) => logInActions.logInSuccess({ response }))),
+      switchMap(({ logDto }) =>
+        this.apiService.post<LoginResponse>(`/auth/sign-in`, logDto).pipe(
+          map((apiResponse) => {
+            this.cookieService.set(
+              'authorization',
+              `${apiResponse.accessToken}`,
+              {
+                expires: 86400,
+                sameSite: 'Strict',
+                secure: true,
+                path: '/',
+              },
+            );
+            return logInActions.logInSuccess({ response: apiResponse });
+          }),
+        ),
       ),
     );
   });
@@ -35,14 +47,10 @@ export class SharedStoreEffect {
       return this.action$.pipe(
         ofType(logInActions.logInSuccess),
         tap(({ response }) => {
-          const role = response.user.role;
+          const { user, school, ...userProfile } = response.userProfile;
+          const role = user.role;
+          sessionStorage.setItem('user', atob(JSON.stringify(userProfile)));
           this.router.navigate([role, 'dashboard']);
-          this.cookieService.set('authorization', `${response.accessToken}`, {
-            expires: 86400,
-            sameSite: 'Strict',
-            secure: true,
-            path: '/',
-          });
         }),
       );
     },
@@ -52,16 +60,30 @@ export class SharedStoreEffect {
   userProfile = createEffect(() => {
     return this.action$.pipe(
       ofType(logInActions.userProfile),
-      concatLatestFrom(() => this.store.select(selectLoggedInUser)),
-      filter((action) => !action[1]),
+      concatLatestFrom(() => this.store.select(selectShared)),
+      filter((action) => !action[1].loggedInUser),
       switchMap(() =>
-        this.apiService.get<LoggedInUser>(`/auth/user-profile`).pipe(
+        this.apiService.get<LoggedInUser>(`/auth/profile`).pipe(
           map((response) => logInActions.userProfileSuccess({ response })),
           catchError((error) => of(logInActions.userProfileFailure({ error }))),
         ),
       ),
     );
   });
+  userProfileSuccess = createEffect(
+    () => {
+      return this.action$.pipe(
+        ofType(logInActions.userProfileSuccess),
+        tap(({ response }) => {
+          const { user, school, ...userProfile } = response;
+          // const role = user.role;
+          sessionStorage.setItem('user', btoa(JSON.stringify(userProfile)));
+          // this.router.navigate([role, 'dashboard']);
+        }),
+      );
+    },
+    { dispatch: false },
+  );
 
   userProfileFailure = createEffect(
     () => {

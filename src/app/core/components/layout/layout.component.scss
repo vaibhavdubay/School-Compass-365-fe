@@ -16,34 +16,21 @@
 .mat-toolbar.mat-primary {
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 999;
   background: var(--primary-550);
 }
 
-.router-link-active {
-  background-color: #f7f7f7;
-  box-shadow: inset 1px 0px #0000000d, inset 0px 1px #0000000d,
-    inset 0px -1px #0000000d;
-}
 .nav_list {
   column-gap: 0.6rem;
   .material-symbols-outlined {
     font-size: 1.3rem;
   }
 }
-.mdc-list-item.mdc-list-item--with-one-line {
-  border-radius: 31px;
-  border-bottom-right-radius: 0;
-  border-top-right-radius: 0;
-}
-.mat-mdc-list-base {
-  height: calc(100vh - (var(--mat-toolbar-standard-height)));
-  background-color: white;
-}
 
 main {
   padding: 1.5rem 1rem 0.5rem;
   height: calc(100vh - (var(--mat-toolbar-standard-height)));
+  background-color: #f8f9fa;
 }
 
 .profile_container {
@@ -78,4 +65,51 @@ main {
       color: gray;
     }
   }
+}
+
+.editOrViewSchoolProfile {
+  font-size: 0.8rem;
+}
+
+// mobile style
+
+.mobile_width {
+  width: 100%;
+}
+.mobile_padding {
+  padding: 0px 5rem;
+}
+.profile_option {
+  mat-icon {
+    cursor: pointer;
+    color: #379ae6ff;
+  }
+  .profile_name {
+    color: white;
+    font-weight: 500;
+    font-size: 1.4rem;
+    padding: 5px 14px;
+    border-radius: 27px;
+    background: var(--primary-550);
+  }
+}
+.mobile_bgColor {
+  background: white !important;
+  mat-icon.mat-icon.notranslate.material-icons.mat-ligature-font.mat-icon-no-color {
+    color: var(--primary-550) !important;
+  }
+}
+.profile_icon {
+  padding: 4px;
+  border-radius: 27px;
+  border: 1px solid rgb(189 174 174 / 47%);
+  div {
+    padding: 0px 9px;
+    border-radius: 27px;
+    background: var(--primary-550);
+  }
+}
+
+.mdc-list-item.mdc-list-item--with-one-line {
+  height: 40px !important;
 }
