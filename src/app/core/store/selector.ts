@@ -6,4 +6,16 @@ const selectSharedState = createFeatureSelector<SharedState>(
   STORE_FEATURES.SHARED,
 );
 
-export const selectShared = createSelector(selectSharedState, (state) => state);
+export const selectLoggedInUser = createSelector(
+  selectSharedState,
+  (state) => state.loggedInUser,
+);
+export const selectSchoolProfile = createSelector(
+  selectSharedState,
+  (state) => state.schoolProfile,
+);
+
+export const selectLoggedInUserWithSchool = createSelector(
+  selectSharedState,
+  ({ loggedInUser, schoolProfile }) => ({ loggedInUser, schoolProfile }),
+);

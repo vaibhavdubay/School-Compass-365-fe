@@ -1,7 +1,142 @@
-<h4 class="label px-2 pb-4 pt-2">School Profile</h4>
+<section
+  class="school_info_container d-flex flex-wrap justify-content-center py-4"
+>
+  <div
+    class="col-md-6 pb-4 d-flex flex-column align-items-center justify-content-center text-center"
+  >
+    <div>
+      <img
+        style="min-height: 70px; padding: 0px 0 12px; width: 70px"
+        src="assets/images/avatar_1.webp"
+        alt=""
+      />
+    </div>
+    <div [ngStyle]="{ width: screenObserver.isMobile ? '100%' : '50%' }">
+      <h5>{{ schoolProfile?.name }}</h5>
+      <span>
+        Sakri, {{ schoolProfile?.city }} ({{ schoolProfile?.state }})
+      </span>
+      <div class="small">
+        {{ schoolProfile?.currentAcademicYear?.academicYear }}
+      </div>
+    </div>
+  </div>
 
-<sc-form
-  [formConfig]="formConfig"
-  #form
-  (buttonClick)="eventHandler($event)"
-></sc-form>
+  <div class="col-md-6 d-flex flex-column">
+    <div class="row">
+      <div>School DISE Code</div>
+      <mat-form-field appearance="fill" class="col-md-6">
+        <input matInput [value]="schoolProfile?.schoolDISECode" />
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <div>School Registration Code</div>
+      <mat-form-field appearance="fill" class="col-md-6">
+        <input matInput [value]="schoolProfile?.schoolCode" />
+      </mat-form-field>
+    </div>
+    <span class="current_Academic_year d-flex">
+      <mat-icon class="example-tab-icon">event_available</mat-icon>
+      <span> Complete Academic Year </span>
+    </span>
+  </div>
+</section>
+
+<mat-tab-group class="mat_tab_group">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      Address Details
+    </ng-template>
+    <sc-form [formConfig]="formConfig" #form></sc-form>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      Classes
+    </ng-template>
+
+    <div
+      class="d-flex flex-wrap pt-3 col-md-6 justify-content-around school_edit_profile"
+    >
+      <div>
+        <mat-form-field>
+          <mat-label>From</mat-label>
+          <mat-select [ngModel]="classes.from">
+            @for (item of classOptions; track item) {
+            <mat-option [value]="item.key">{{ item.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>To</mat-label>
+          <mat-select [ngModel]="classes.to">
+            @for (item of classOptions; track item) {
+            <mat-option [value]="item.key">{{ item.label }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div
+      cdkDropListGroup
+      class="d-flex justify-content-between flex-wrap py-2"
+      [ngStyle]="{ padding: screenObserver.isMobile ? '0px' : '3rem' }"
+    >
+      <div
+        class="example-container col-md-6"
+        [ngStyle]="{ width: screenObserver.isMobile ? '100%' : '45%' }"
+      >
+        <h4>Available class list</h4>
+
+        <div
+          cdkDropList
+          [cdkDropListData]="items"
+          class="example-list"
+          cdkDropListSortingDisabled
+          (cdkDropListDropped)="drop($event)"
+        >
+          @for (item of items; track item) {
+          <div class="example-box" cdkDrag>{{ item.label }}</div>
+          }
+        </div>
+      </div>
+
+      <div
+        class="example-container col-md-6"
+        [ngStyle]="{ width: screenObserver.isMobile ? '100%' : '45%' }"
+      >
+        <h4>Selected class list preview</h4>
+
+        <div
+          cdkDropList
+          [cdkDropListData]="basket"
+          class="example-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          @for (item of basket; track item) {
+          <div class="example-box" cdkDrag>{{ item.label }}</div>
+          }
+        </div>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab disabled="true">
+    <ng-template mat-tab-label>
+      <mat-icon class="example-tab-icon">thumb_up</mat-icon>
+      Transportation
+    </ng-template>
+
+    Content 3
+  </mat-tab>
+</mat-tab-group>
+
+<div class="col-md-12 text-center justify-content-end d-flex py-4">
+  <button mat-flat-button color="basic" class="mx-2">Cancel</button>
+  <button mat-flat-button color="warn">Continue</button>
+</div>

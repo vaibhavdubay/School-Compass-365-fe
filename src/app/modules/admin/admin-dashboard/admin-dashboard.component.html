@@ -1,9 +1,0 @@
-<sc-side-nav [naveItem]="navConfig">
-  <sc-form [formConfig]="formConfig" #form></sc-form>
-  <sc-table
-    [config]="tableConfig"
-    [data]="tableData"
-    (buttonClick)="getButtonClick($event)"
-  ></sc-table>
-  <router-outlet></router-outlet>
-</sc-side-nav>

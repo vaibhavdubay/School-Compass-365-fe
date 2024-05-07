@@ -8,23 +8,43 @@ import { EffectsModule } from '@ngrx/effects';
 import { AdminEffects } from './state/effect';
 import { AdminService } from './services/admin.service';
 import { CoreModule } from 'src/app/core/core.module';
-import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TableModule } from 'src/app/core/modules/table/table.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AdminMainComponent } from './admin.component';
 import { SchoolProfileComponent } from './components/school-profile/school-profile.component';
 
+// material
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatIconModule } from '@angular/material/icon';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
+
+const material = [
+  MatTabsModule,
+  MatIconModule,
+  MatInputModule,
+  DragDropModule,
+  MatSelectModule,
+  MatButtonModule,
+  MatFormFieldModule,
+];
+
 @NgModule({
   declarations: [
-    AdminDashboardComponent,
     AdminMainComponent,
     DashboardComponent,
     SchoolProfileComponent,
   ],
   imports: [
+    ...material,
     CoreModule,
     TableModule,
+    FormsModule,
+    ReactiveFormsModule,
     CommonModule,
     AdminRoutingModule,
     ReactiveFormsModule,

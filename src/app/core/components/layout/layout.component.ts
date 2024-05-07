@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Input, inject } from '@angular/core';
-import { LoggedInUser, NavItem } from '@sc-models/core';
+import { NavItem } from '@sc-models/core';
 import { Observable, map, shareReplay } from 'rxjs';
 import { SharedStoreService } from '../../service/shared-store.service';
 import { logInActions } from '../../store/action';
@@ -21,7 +21,7 @@ export class LayoutComponent {
     private sharedStore: SharedStoreService,
     public readonly screenObserver: ScreenSizeObserver,
   ) {
-    this.profile = this.sharedStore.loggedInUser$;
+    this.profile = this.sharedStore.loggedInUserWithSchool$;
   }
 
   isHandset$: Observable<boolean> = this.breakpointObserver

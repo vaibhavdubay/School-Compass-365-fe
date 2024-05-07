@@ -2,12 +2,16 @@ import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import { logInActions } from './action';
 import { catchError, filter, map, of, switchMap, tap } from 'rxjs';
 import { ApiService } from '../service/http.service';
-import { LoggedInUser, LoginResponse } from '@sc-models/core';
+import { LoggedInUser, LoginResponse, UserProfile } from '@sc-models/core';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectShared } from './selector';
 import { CookieService } from '../service/cookie.service';
+import { initAdminState } from '@sc-modules/admin/state/action';
+import { Role } from '@sc-enums/role';
+import { initStudentState } from '@sc-modules/students/state/action';
+import { initTeacherState } from '@sc-modules/teachers/state/action';
+import { selectLoggedInUser } from './selector';
 
 @Injectable()
 export class SharedStoreEffect {
@@ -46,22 +50,23 @@ export class SharedStoreEffect {
     () => {
       return this.action$.pipe(
         ofType(logInActions.logInSuccess),
-        tap(({ response }) => {
+        map(({ response }) => {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
           const { user, school, ...userProfile } = response.userProfile;
           const role = user.role;
-          sessionStorage.setItem('user', atob(JSON.stringify(userProfile)));
           this.router.navigate([role, 'dashboard']);
+          return this.handleFeatureState(user.role, userProfile);
         }),
       );
     },
-    { dispatch: false },
+    // { dispatch: false },
   );
 
   userProfile = createEffect(() => {
     return this.action$.pipe(
       ofType(logInActions.userProfile),
-      concatLatestFrom(() => this.store.select(selectShared)),
-      filter((action) => !action[1].loggedInUser),
+      concatLatestFrom(() => this.store.select(selectLoggedInUser)),
+      filter((action) => !action[1]),
       switchMap(() =>
         this.apiService.get<LoggedInUser>(`/auth/profile`).pipe(
           map((response) => logInActions.userProfileSuccess({ response })),
@@ -70,20 +75,16 @@ export class SharedStoreEffect {
       ),
     );
   });
-  userProfileSuccess = createEffect(
-    () => {
-      return this.action$.pipe(
-        ofType(logInActions.userProfileSuccess),
-        tap(({ response }) => {
-          const { user, school, ...userProfile } = response;
-          // const role = user.role;
-          sessionStorage.setItem('user', btoa(JSON.stringify(userProfile)));
-          // this.router.navigate([role, 'dashboard']);
-        }),
-      );
-    },
-    { dispatch: false },
-  );
+  userProfileSuccess = createEffect(() => {
+    return this.action$.pipe(
+      ofType(logInActions.userProfileSuccess),
+      map(({ response }) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { user, school, ...userProfile } = response;
+        return this.handleFeatureState(user.role, userProfile);
+      }),
+    );
+  });
 
   userProfileFailure = createEffect(
     () => {
@@ -118,4 +119,15 @@ export class SharedStoreEffect {
     },
     { dispatch: false },
   );
+
+  private handleFeatureState(role: Role, userProfile: UserProfile) {
+    switch (role) {
+      case Role.ADMIN:
+        return initAdminState({ adminProfile: userProfile });
+      case Role.TEACHER:
+        return initTeacherState({ teacherProfile: userProfile });
+      case Role.STUDENT:
+        return initStudentState({ studentProfile: userProfile });
+    }
+  }
 }

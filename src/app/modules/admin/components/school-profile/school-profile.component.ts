@@ -1,8 +1,14 @@
-import { Component, ViewChild } from '@angular/core';
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from '@angular/cdk/drag-drop';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { FormComponent } from '@sc-forms/form.component';
 import { SchoolProfile } from '@sc-models/core';
-import { ButtonClickEvent } from '@sc-models/form';
+import { ListOption } from '@sc-models/form';
 import { schoolFormConfig } from '@sc-modules/admin/constants/admin.constant';
+import { ScreenSizeObserver } from 'src/app/core/service/screen.service';
 import { SharedStoreService } from 'src/app/core/service/shared-store.service';
 
 @Component({
@@ -10,42 +16,49 @@ import { SharedStoreService } from 'src/app/core/service/shared-store.service';
   templateUrl: './school-profile.component.html',
   styleUrl: './school-profile.component.scss',
 })
-export class SchoolProfileComponent {
+export class SchoolProfileComponent implements AfterViewInit {
   formConfig = schoolFormConfig;
-  schoolProfile!: SchoolProfile;
+  @ViewChild('form') form!: FormComponent<SchoolProfile>;
+  schoolProfile?: SchoolProfile;
 
-  @ViewChild('form') formComponent!: FormComponent<{
-    address1: string;
-    address2: string;
-    city: string;
-    currentAcademicYear: string;
-    establishedYear: string;
-    name: string;
-    pincode: string;
-    schoolCode: string;
-    schoolDISECode: string;
-    state: string;
-  }>;
-
-  get FormGroup() {
-    return this.formComponent?.formGroup;
-  }
-
-  constructor(private sharedStoreService: SharedStoreService) {
-    sharedStoreService.loggedInUser$.subscribe((user) => {
-      this.schoolProfile = user.school;
-      this.FormGroup?.patchValue(user.school);
+  items: ListOption[] = [];
+  basket: ListOption[] = [];
+  classOptions: ListOption[] = [];
+  classes = {
+    from: '',
+    to: '',
+  };
+  constructor(
+    private sharedStore: SharedStoreService,
+    public readonly screenObserver: ScreenSizeObserver,
+  ) {
+    this.sharedStore.School$.subscribe((schoolProfile) => {
+      this.schoolProfile = schoolProfile;
+      this.classOptions = schoolProfile.classes.map(
+        (_class) => new ListOption(_class['className']),
+      );
+      this.items = [...this.classOptions];
+      if (this.form) this.form.formValue = schoolProfile;
     });
   }
-
-  eventHandler(event: ButtonClickEvent) {
-    switch (event.key) {
-      case 'reset':
-        return this.FormGroup?.patchValue(this.schoolProfile);
-      case 'submit':
-        this.submit();
-    }
+  ngAfterViewInit(): void {
+    if (this.schoolProfile) this.form.formValue = this.schoolProfile;
   }
 
-  submit() {}
+  drop(event: CdkDragDrop<ListOption[]>) {
+    if (event.previousContainer === event.container) {
+      moveItemInArray(
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
+  }
 }
