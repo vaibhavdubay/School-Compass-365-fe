@@ -39,7 +39,10 @@ export class ErrorComponent {
           );
           break;
         case 'pattern':
-          this.message = errorMessages.pattern;
+          this.message =
+            (this.element as TextInput).validateAs == 'email'
+              ? errorMessages.email
+              : errorMessages.pattern;
           break;
         case 'email':
           this.message = errorMessages.email;

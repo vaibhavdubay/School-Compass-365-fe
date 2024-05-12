@@ -12,6 +12,7 @@ import { Role } from '@sc-enums/role';
 import { initStudentState } from '@sc-modules/students/state/action';
 import { initTeacherState } from '@sc-modules/teachers/state/action';
 import { selectLoggedInUser } from './selector';
+import { apiRoutes } from '../constants/api.constants';
 
 @Injectable()
 export class SharedStoreEffect {
@@ -27,7 +28,7 @@ export class SharedStoreEffect {
     return this.action$.pipe(
       ofType(logInActions.logIn),
       switchMap(({ logDto }) =>
-        this.apiService.post<LoginResponse>(`/auth/sign-in`, logDto).pipe(
+        this.apiService.post<LoginResponse>(apiRoutes.auth.signin, logDto).pipe(
           map((apiResponse) => {
             this.cookieService.set(
               'authorization',
@@ -46,21 +47,18 @@ export class SharedStoreEffect {
     );
   });
 
-  logInSuccess = createEffect(
-    () => {
-      return this.action$.pipe(
-        ofType(logInActions.logInSuccess),
-        map(({ response }) => {
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          const { user, school, ...userProfile } = response.userProfile;
-          const role = user.role;
-          this.router.navigate([role, 'dashboard']);
-          return this.handleFeatureState(user.role, userProfile);
-        }),
-      );
-    },
-    // { dispatch: false },
-  );
+  logInSuccess = createEffect(() => {
+    return this.action$.pipe(
+      ofType(logInActions.logInSuccess),
+      map(({ response }) => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { user, school, ...userProfile } = response.userProfile;
+        const role = user.role;
+        this.router.navigate([role, 'dashboard']);
+        return this.handleFeatureState(user.role, userProfile);
+      }),
+    );
+  });
 
   userProfile = createEffect(() => {
     return this.action$.pipe(
@@ -68,7 +66,7 @@ export class SharedStoreEffect {
       concatLatestFrom(() => this.store.select(selectLoggedInUser)),
       filter((action) => !action[1]),
       switchMap(() =>
-        this.apiService.get<LoggedInUser>(`/auth/profile`).pipe(
+        this.apiService.get<LoggedInUser>(apiRoutes.auth.profile).pipe(
           map((response) => logInActions.userProfileSuccess({ response })),
           catchError((error) => of(logInActions.userProfileFailure({ error }))),
         ),

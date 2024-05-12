@@ -21,16 +21,17 @@
   vertical-align: top;
 }
 
-.example-list {
+.list-container {
   border: solid 1px #ccc;
   max-height: 15rem;
   background: white;
+  height: 100%;
   border-radius: 4px;
   overflow-y: auto;
 }
 
-.example-box {
-  padding: 20px 10px;
+.class-list {
+  padding: 10px;
   border-bottom: solid 1px #ccc;
   color: rgba(0, 0, 0, 0.87);
   display: flex;
@@ -62,6 +63,6 @@
   border: none;
 }
 
-.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+.list-container.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
   transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }

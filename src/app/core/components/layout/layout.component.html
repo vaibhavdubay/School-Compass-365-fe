@@ -117,17 +117,17 @@
           </div>
           <div class="d-flex align-items-center justify-content-center">
             <!-- TODO: Please find a batter way of showing image since it is coming inside the user's profile  -->
-            <!-- <img
+            <img
               style="height: 24px"
               [src]="
-                (profile | async)?.loggedInUser?.profileImage?.url
-                  ? (profile | async)?.loggedInUser?.profileImage?.url
+                (profile | async)?.loggedInUser?.profileImageUrl
+                  ? (profile | async)?.loggedInUser?.profileImageUrl
                   : 'assets/images/avatar_1.webp'
               "
               #profileImage
               (error)="profileImage.src = 'assets/images/avatar_1.webp'"
               alt="user profile "
-            /> -->
+            />
             <!-- <mat-icon>account_circle</mat-icon> -->
           </div>
           <mat-menu #menu="matMenu">

@@ -10,3 +10,8 @@ export const selectAdminUser = createSelector(
   selectAdminState,
   (state) => state.adminUser,
 );
+
+export const selectClasses = createSelector(
+  selectAdminState,
+  (state) => state.classes,
+);

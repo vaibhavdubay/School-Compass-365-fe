@@ -18,7 +18,10 @@ export const SharedStoreReducer = createReducer(
     logInActions.logInSuccess,
     (state, action): SharedState => ({
       ...state,
-      loggedInUser: action.response.userProfile.user,
+      loggedInUser: {
+        ...action.response.userProfile.user,
+        profileImageUrl: action.response.userProfile.profileImageUrl,
+      },
       schoolProfile: action.response.userProfile.school,
     }),
   ),
@@ -26,7 +29,10 @@ export const SharedStoreReducer = createReducer(
     logInActions.userProfileSuccess,
     (state, action): SharedState => ({
       ...state,
-      loggedInUser: action.response.user,
+      loggedInUser: {
+        ...action.response.user,
+        profileImageUrl: action.response.profileImageUrl,
+      },
       schoolProfile: action.response.school,
     }),
   ),

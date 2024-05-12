@@ -129,6 +129,7 @@ export interface User {
   userName: string;
   password: string;
   role: Role;
+  profileImageUrl: string;
   changePassword: boolean;
   createdAt: Date;
   updatedAt: Date;

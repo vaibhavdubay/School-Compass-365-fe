@@ -13,9 +13,7 @@
     </div>
     <div [ngStyle]="{ width: screenObserver.isMobile ? '100%' : '50%' }">
       <h5>{{ schoolProfile?.name }}</h5>
-      <span>
-        Sakri, {{ schoolProfile?.city }} ({{ schoolProfile?.state }})
-      </span>
+      <span> {{ schoolProfile?.city }} ({{ schoolProfile?.state }}) </span>
       <div class="small">
         {{ schoolProfile?.currentAcademicYear?.academicYear }}
       </div>
@@ -58,31 +56,6 @@
     </ng-template>
 
     <div
-      class="d-flex flex-wrap pt-3 col-md-6 justify-content-around school_edit_profile"
-    >
-      <div>
-        <mat-form-field>
-          <mat-label>From</mat-label>
-          <mat-select [ngModel]="classes.from">
-            @for (item of classOptions; track item) {
-            <mat-option [value]="item.key">{{ item.label }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field>
-          <mat-label>To</mat-label>
-          <mat-select [ngModel]="classes.to">
-            @for (item of classOptions; track item) {
-            <mat-option [value]="item.key">{{ item.label }}</mat-option>
-            }
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </div>
-
-    <div
       cdkDropListGroup
       class="d-flex justify-content-between flex-wrap py-2"
       [ngStyle]="{ padding: screenObserver.isMobile ? '0px' : '3rem' }"
@@ -96,12 +69,12 @@
         <div
           cdkDropList
           [cdkDropListData]="items"
-          class="example-list"
+          class="list-container"
           cdkDropListSortingDisabled
           (cdkDropListDropped)="drop($event)"
         >
           @for (item of items; track item) {
-          <div class="example-box" cdkDrag>{{ item.label }}</div>
+          <div class="class-list" cdkDrag>{{ item.className }}</div>
           }
         </div>
       </div>
@@ -115,11 +88,11 @@
         <div
           cdkDropList
           [cdkDropListData]="basket"
-          class="example-list"
+          class="list-container"
           (cdkDropListDropped)="drop($event)"
         >
           @for (item of basket; track item) {
-          <div class="example-box" cdkDrag>{{ item.label }}</div>
+          <div class="class-list" cdkDrag>{{ item.className }}</div>
           }
         </div>
       </div>
@@ -138,5 +111,7 @@
 
 <div class="col-md-12 text-center justify-content-end d-flex py-4">
   <button mat-flat-button color="basic" class="mx-2">Cancel</button>
-  <button mat-flat-button color="warn">Continue</button>
+  <button mat-flat-button color="warn" (click)="updateSchoolProfile()">
+    Continue
+  </button>
 </div>

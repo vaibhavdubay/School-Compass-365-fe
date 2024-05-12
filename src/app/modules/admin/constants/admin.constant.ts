@@ -13,7 +13,7 @@ export const schoolFormConfig: FormConfig = [
   {
     elementType: 'text',
     element: {
-      key: 'phone',
+      key: 'phoneNumber',
       validateAs: 'number',
       required: true,
       label: 'Phone',
