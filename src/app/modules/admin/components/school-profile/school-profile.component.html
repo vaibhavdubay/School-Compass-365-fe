@@ -11,7 +11,7 @@
         alt=""
       />
     </div>
-    <div [ngStyle]="{ width: screenObserver.isMobile ? '100%' : '50%' }">
+    <div [ngStyle]="{ width: '100%', maxWidth: '260px' }">
       <h5>{{ schoolProfile?.name }}</h5>
       <span> {{ schoolProfile?.city }} ({{ schoolProfile?.state }}) </span>
       <div class="small">
