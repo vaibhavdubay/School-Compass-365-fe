@@ -134,9 +134,9 @@ export class CookieService {
         'Invalid sameSite option. Must be "Lax", "Strict", or "None".',
       );
     }
-
+    const cookie = `${name}=${value}${expires}${path}${domain}${secure}${sameSite}`;
     // Construct and set the cookie
-    document.cookie = `${name}=${value}${expires}${path}${domain}${secure}${sameSite}`;
+    document.cookie = cookie;
   }
 }
 

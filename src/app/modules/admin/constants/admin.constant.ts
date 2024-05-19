@@ -3,9 +3,44 @@ import { FormConfig } from '@sc-models/form';
 
 export const sideNavConfig: NavItem[] = [
   {
-    icon: 'person',
+    icon: 'analytics',
     label: 'Dashboard',
-    routerLink: ['./'],
+    routerLink: ['./dashboard'],
+  },
+  {
+    icon: 'co_present',
+    label: 'Teachers',
+    routerLink: ['./teachers'],
+  },
+  {
+    icon: 'local_library',
+    label: 'Students',
+    routerLink: ['./students'],
+  },
+  {
+    icon: 'class',
+    label: 'Classes',
+    routerLink: ['./classes'],
+  },
+  {
+    icon: 'assignment',
+    label: 'Examinations',
+    routerLink: ['./examinations'],
+  },
+  {
+    icon: 'event',
+    label: 'Events',
+    routerLink: ['./events'],
+  },
+  {
+    icon: 'list',
+    label: 'Leaves',
+    routerLink: ['./leaves'],
+  },
+  {
+    icon: 'move_down',
+    label: 'Transferred',
+    routerLink: ['./transferred'],
   },
 ];
 

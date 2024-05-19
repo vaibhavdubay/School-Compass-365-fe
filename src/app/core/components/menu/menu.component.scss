@@ -1,11 +1,17 @@
 .router-link-active {
-  // background-color: #f7f7f7;
-  background-color: #f8f9fa;
-  box-shadow: inset 1px 0px #0000000d, inset 0px 1px #0000000d,
-    inset 0px -1px #0000000d;
+  .nav_list {
+    color: #eb7623; /* neutral-600 */
+    font-weight: 600;
+  }
 }
 .nav_list {
-  column-gap: 0.6rem;
+  color: var(--neutral-600); /* neutral-600 */
+  gap: 8px;
+  position: relative;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  line-height: 22px;
+  font-weight: 400;
   .material-symbols-outlined {
     font-size: 1.3rem;
   }
@@ -13,4 +19,7 @@
 
 .mat-mdc-list-base {
   background-color: white;
+}
+a.mdc-list-item.mdc-list-item--with-one-line {
+  height: 2.3rem;
 }

@@ -33,7 +33,7 @@ export class LoginComponent {
     if (token) {
       const data = JSON.parse(atob(token.split('.')?.[1]) || '{}');
       console.log(data);
-      router.navigate([data?.userProfile?.user?.role]);
+      router.navigate([data?.user?.role]);
     } else {
       if (router.url.startsWith('/admin')) {
         this.isAdmin = true;

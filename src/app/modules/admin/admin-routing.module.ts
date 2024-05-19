@@ -12,10 +12,16 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
+        data: {
+          title: 'Dashboard',
+        },
       },
       {
         path: 'school-profile',
         component: SchoolProfileComponent,
+        data: {
+          title: 'School Profile',
+        },
       },
     ],
   },

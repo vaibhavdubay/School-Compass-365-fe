@@ -5,7 +5,6 @@ import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
-  { path: 'admin/login/:id', component: LoginComponent },
   {
     path: '',
     canMatch: [authGuard],

@@ -73,7 +73,6 @@ export class SchoolProfileComponent implements AfterViewInit {
   }
 
   updateSchoolProfile() {
-    console.log(this.form.formGroup.value);
     const school = {
       ...this.schoolProfile,
       ...this.form.formGroup.value,

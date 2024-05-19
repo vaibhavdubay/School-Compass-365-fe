@@ -6,6 +6,7 @@ import { SharedStoreService } from '../../service/shared-store.service';
 import { logInActions } from '../../store/action';
 import { ScreenSizeObserver } from '../../service/screen.service';
 import { SharedState } from '../../store/reducer';
+import { TitleService } from '../../service/title.service';
 
 @Component({
   selector: 'sc-layout',
@@ -17,8 +18,10 @@ export class LayoutComponent {
 
   private breakpointObserver = inject(BreakpointObserver);
   profile: Observable<SharedState>;
+  title$: Observable<string> = this.titleService.title$;
   constructor(
     private sharedStore: SharedStoreService,
+    private titleService: TitleService,
     public readonly screenObserver: ScreenSizeObserver,
   ) {
     this.profile = this.sharedStore.loggedInUserWithSchool$;

@@ -35,6 +35,7 @@ export interface SchoolProfile {
   logoUrl: string;
   currentAcademicYear: AcademicYear;
   city: string;
+  town: string;
   state: string;
   pincode: number;
   schoolDISECode: string;
